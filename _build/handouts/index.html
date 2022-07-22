@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <title>Node Drills 2 | Devmountain Foundations</title>
+
+      <link
+        href="_static/pygments.css"
+        rel="stylesheet"
+        type="text/css"
+      />
+      <link href="_static/devmountain.css" rel="stylesheet" type="text/css" />
+          <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+          <link rel="stylesheet" type="text/css" href="_static/devmountain.css" />
+          <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
+          <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+
+      <script src="_static/pdfobject.min.js"></script>
+      
+  </head>
+  <body>
+      <div id="handouts-container">
+        <header id="page-header">
+            <p id="project-title">Devmountain Foundations</p>
+            <p id="page-title">Node Drills 2</p>
+              <p id="backlink">
+                <a href="/"> &laquo; Back to Homepage </a>
+              </p>
+        </header>
+
+        <nav id="page-toc"><ul>
+<li><a class="reference internal" href="#">Node Drills 2</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#instructions">Instructions</a><ul>
+<li><a class="reference internal" href="#part-1-front-end">Part 1: Front end</a></li>
+<li><a class="reference internal" href="#part-2-database-setup">Part 2: Database Setup</a></li>
+<li><a class="reference internal" href="#part-3-server-setup">Part 3: Server Setup</a></li>
+<li><a class="reference internal" href="#part-4-basic-server">Part 4: Basic Server</a></li>
+<li><a class="reference internal" href="#part-5-controller">Part 5: Controller</a></li>
+<li><a class="reference internal" href="#part-6-postman-testing">Part 6: Postman Testing</a></li>
+<li><a class="reference internal" href="#part-7-front-end-other-packages">Part 7: Front End &amp; Other Packages</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+
+        <main id="page-content">
+            <section class="section" id="node-drills-2">
+<h1>Node Drills 2</h1>
+<section class="section" id="introduction">
+<h2>Introduction</h2>
+<p>The purpose of this exercise is to have practice building a full-stack application on your own! In this exercise, you will:</p>
+<ol class="arabic simple">
+<li><p>Build a server from scratch</p></li>
+<li><p>Install and utilize the following packages: <code class="docutils literal notranslate"><span class="pre">dotenv</span></code>, <code class="docutils literal notranslate"><span class="pre">chalk</span></code>, <code class="docutils literal notranslate"><span class="pre">morgan</span></code>, <code class="docutils literal notranslate"><span class="pre">nvm</span></code>, <code class="docutils literal notranslate"><span class="pre">debug</span></code>, <code class="docutils literal notranslate"><span class="pre">express</span></code>, <code class="docutils literal notranslate"><span class="pre">nodemon</span></code></p></li>
+<li><p>Practice using express methods: <code class="docutils literal notranslate"><span class="pre">set</span></code>, <code class="docutils literal notranslate"><span class="pre">use</span></code>, <code class="docutils literal notranslate"><span class="pre">get</span></code>, <code class="docutils literal notranslate"><span class="pre">post</span></code>, <code class="docutils literal notranslate"><span class="pre">put</span></code>, <code class="docutils literal notranslate"><span class="pre">delete</span></code></p></li>
+<li><p>Practice using express response methods: <code class="docutils literal notranslate"><span class="pre">json</span></code>, <code class="docutils literal notranslate"><span class="pre">send</span></code>, <code class="docutils literal notranslate"><span class="pre">sendStatus</span></code></p></li>
+<li><p>Connect a database to your server</p></li>
+<li><p>Practice debugging Node.js with Chrome DevTools</p></li>
+</ol>
+</section>
+<section class="section" id="instructions">
+<h2>Instructions</h2>
+<section class="section" id="part-1-front-end">
+<h3>Part 1: Front end</h3>
+<p>It is extremely important that you know what you are building prior to building it. Otherwise this exercise is pointless.</p>
+<p>The client (or front end) has already been built by another developer. They have given you their front end code so that you can see what they have built out already. It is essential that you know what is happening on the client app (front end) so that you know what information you will be expecting on the backend.</p>
+<p>Open the client folder, and run <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">start</span></code> to run the front end locally and see what this looks like.</p>
+<p>Walk through the code to make sense of each piece and what it is doing.</p>
+<p>This is an app that can display a list of user inputs. Here is a basic run down of features:</p>
+<ol class="arabic">
+<li><p>The user can type information into the input box. Each keystroke in the input box will trigger 2 things:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>The input box’s value will be saved to state <code class="docutils literal notranslate"><span class="pre">input</span></code></p></li>
+<li><p>A GET request will be made to the server at the route <code class="docutils literal notranslate"><span class="pre">/api/info</span></code> the response.data will be saved to state <code class="docutils literal notranslate"><span class="pre">serverInfo</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>The user can click the submit button which will trigger a POST request at the route <code class="docutils literal notranslate"><span class="pre">/api/info</span></code></p></li>
+</ol>
+</section>
+<section class="section" id="part-2-database-setup">
+<h3>Part 2: Database Setup</h3>
+<p>We have a front end. The two remaining pieces are a Database to store the information, and a server to handle the requests.</p>
+<p>Let’s build a Postgresql database with Heroku who will spin one up for us for free.</p>
+<ol class="arabic">
+<li><p>Sign into Heroku.com</p></li>
+<li><p>Click New &gt; Create New App</p>
+<blockquote>
+<div><p>Video:</p>
+<div class="togglereveal "><details class="admonition-body"><summary></summary><iframe src="https://player.vimeo.com/video/662807047" width="480" height="320" allowfullscreen="allowfullscreen" webkitallowfullscreen="webkitallowfullscreen" mozallowfullscreen="mozallowfullscreen"></iframe></details></div></div></blockquote>
+</li>
+<li><p>Type in the name of your app and click Create app</p>
+<blockquote>
+<div><p>Video:</p>
+<div class="togglereveal "><details class="admonition-body"><summary></summary><iframe src="https://player.vimeo.com/video/662807171" width="480" height="320" allowfullscreen="allowfullscreen" webkitallowfullscreen="webkitallowfullscreen" mozallowfullscreen="mozallowfullscreen"></iframe></details></div></div></blockquote>
+</li>
+<li><p>Click on the Resources tab</p>
+<blockquote>
+<div><p>Video:</p>
+<div class="togglereveal "><details class="admonition-body"><summary></summary><iframe src="https://player.vimeo.com/video/662807262" width="480" height="320" allowfullscreen="allowfullscreen" webkitallowfullscreen="webkitallowfullscreen" mozallowfullscreen="mozallowfullscreen"></iframe></details></div></div></blockquote>
+</li>
+<li><p>Type in the Add-ons search bar <code class="docutils literal notranslate"><span class="pre">Heroku</span> <span class="pre">Postgres</span></code></p>
+<blockquote>
+<div><p>Video:</p>
+<div class="togglereveal "><details class="admonition-body"><summary></summary><iframe src="https://player.vimeo.com/video/662807312" width="480" height="320" allowfullscreen="allowfullscreen" webkitallowfullscreen="webkitallowfullscreen" mozallowfullscreen="mozallowfullscreen"></iframe></details></div></div></blockquote>
+</li>
+<li><p>Click on the option that appears <code class="docutils literal notranslate"><span class="pre">Heroku</span> <span class="pre">Postgres</span></code></p></li>
+<li><p>Click on Submit Order Form</p>
+<blockquote>
+<div><p>Video:</p>
+<div class="togglereveal "><details class="admonition-body"><summary></summary><iframe src="https://player.vimeo.com/video/662807419" width="480" height="320" allowfullscreen="allowfullscreen" webkitallowfullscreen="webkitallowfullscreen" mozallowfullscreen="mozallowfullscreen"></iframe></details></div></div></blockquote>
+</li>
+<li><p>Click on the Heroku Postgres link below the Add-ons search bar</p>
+<blockquote>
+<div><p>Video:</p>
+<div class="togglereveal "><details class="admonition-body"><summary></summary><iframe src="https://player.vimeo.com/video/662807462" width="480" height="320" allowfullscreen="allowfullscreen" webkitallowfullscreen="webkitallowfullscreen" mozallowfullscreen="mozallowfullscreen"></iframe></details></div></div></blockquote>
+</li>
+<li><p>This is your database! To see how to connect to it click on the Settings tab.</p>
+<blockquote>
+<div><p>Video:</p>
+<div class="togglereveal "><details class="admonition-body"><summary></summary><iframe src="https://player.vimeo.com/video/662807554" width="480" height="320" allowfullscreen="allowfullscreen" webkitallowfullscreen="webkitallowfullscreen" mozallowfullscreen="mozallowfullscreen"></iframe></details></div></div></blockquote>
+</li>
+<li><p>Click on View Credentials…</p></li>
+</ol>
+<p>There are 3 ways displayed here that you can connect to your database.</p>
+<ul class="simple">
+<li><p>Host + Database + User + Port + Password</p></li>
+<li><p>URI</p></li>
+<li><p>Heroku CLI</p></li>
+</ul>
+<p>You can use these to connect to this database from anywhere! Now we have a database all set up and ready to add data to it! …right?</p>
+<p>Almost! This is a SQL database, and it needs to have a specific structure to it (tables with columns, and rows of data). Currently there are no tables or columns to store information. We will need to create some tables with columns!</p>
+<p>Feel free to use any GUI or tool (such as SQL Tabs) you desire to query your database. I will be using: <a class="reference external" href="https://pgweb-demo.herokuapp.com/" target="_blank">https://pgweb-demo.herokuapp.com/</a>.</p>
+<p>If you’d like to try it, follow these instructions:</p>
+<div class="togglereveal "><details class="admonition-body"><summary></summary><ul class="simple">
+<li><p>Go to <a class="reference external" href="https://pgweb-demo.herokuapp.com/" target="_blank">https://pgweb-demo.herokuapp.com/</a> (or your favored tool)</p></li>
+<li><p>Copy the URI from Heroku</p></li>
+<li><p>Click the Scheme tab</p></li>
+<li><p>Paste your URI (Where it says Enter server URL scheme)</p></li>
+<li><p>Click Connect button</p></li>
+</ul>
+<iframe src="https://player.vimeo.com/video/662807646" width="480" height="320" allowfullscreen="allowfullscreen" webkitallowfullscreen="webkitallowfullscreen" mozallowfullscreen="mozallowfullscreen"></iframe><ul class="simple">
+<li><p>Now our database has a structure, and we are ready to query it from our server!</p></li>
+</ul>
+<iframe src="https://player.vimeo.com/video/662807696" width="480" height="320" allowfullscreen="allowfullscreen" webkitallowfullscreen="webkitallowfullscreen" mozallowfullscreen="mozallowfullscreen"></iframe></details></div><ul>
+<li><p>However you’d like to access your database (SQL Tabs, pgweb, or something else) you should be able to run queries at this point! Run the following query to create an input table in your database.</p>
+<blockquote>
+<div><div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="k">input</span><span class="p">(</span>
+    <span class="n">id</span> <span class="nb">SERIAL</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
+    <span class="nb">text</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+</section>
+<section class="section" id="part-3-server-setup">
+<h3>Part 3: Server Setup</h3>
+<ol class="arabic">
+<li><p>Create a folder in the root called <code class="docutils literal notranslate"><span class="pre">server</span></code> (This should be at the same exact level as <code class="docutils literal notranslate"><span class="pre">client</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">server</span></code></p></li>
+<li><p>run <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">init</span></code></p></li>
+<li><p>Install some dependencies (packages) that will be useful to our server development.Make sure you are in your server folder when you install these packages! Use this command: <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">i</span> <span class="pre">nodemon</span> <span class="pre">dotenv</span> <span class="pre">chalk</span> <span class="pre">morgan</span> <span class="pre">debug</span> <span class="pre">express</span> <span class="pre">cors</span></code>.</p></li>
+<li><p>You should have a <code class="docutils literal notranslate"><span class="pre">node_modules</span></code> folder, a <code class="docutils literal notranslate"><span class="pre">package.json</span></code> file, and a <code class="docutils literal notranslate"><span class="pre">package-lock.json</span></code> file in your server folder now.</p></li>
+<li><p>Create a file in the root of the <code class="docutils literal notranslate"><span class="pre">server</span></code> folder called <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code>. In this file type in the following: <code class="docutils literal notranslate"><span class="pre">.env</span></code> and <code class="docutils literal notranslate"><span class="pre">/node_modules</span></code>.</p></li>
+<li><p>Create a file in the root of the <code class="docutils literal notranslate"><span class="pre">server</span></code> folder called <code class="docutils literal notranslate"><span class="pre">.env</span></code>. In this file follow this format:</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CONNECTION_STRING</span> <span class="o">=</span> <span class="n">postgres</span><span class="p">:</span><span class="o">//</span><span class="n">somestring</span>
+<span class="n">PORT</span> <span class="o">=</span> <span class="mi">3035</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">.env</p>
+<div class="admonition-body docutils container">
+<p>Make sure you copy your URI over from Heroku for your CONNECTION_STRING.</p>
+<p>And make sure you use port 3035 since that is the port the front end will be using!</p>
+</div>
+</div>
+</section>
+<section class="section" id="part-4-basic-server">
+<h3>Part 4: Basic Server</h3>
+<ol class="arabic simple">
+<li><p>Create a file named <cite>index.js</cite> in your <cite>server</cite> folder.</p></li>
+<li><p>Add your <cite>.env</cite> values to the global <code class="docutils literal notranslate"><span class="pre">process.env</span></code> object using the <code class="docutils literal notranslate"><span class="pre">dotenv</span></code> confiuration method.</p></li>
+<li><p>Grab the <code class="docutils literal notranslate"><span class="pre">PORT</span></code> value from the <code class="docutils literal notranslate"><span class="pre">process.env</span></code> object and save it to the variable <code class="docutils literal notranslate"><span class="pre">port</span></code>.</p></li>
+<li><p>Save the <code class="docutils literal notranslate"><span class="pre">express</span></code> package equal to the variable <code class="docutils literal notranslate"><span class="pre">express</span></code>. Then invoke <code class="docutils literal notranslate"><span class="pre">express</span></code> and save the result to the variable <code class="docutils literal notranslate"><span class="pre">app</span></code>.</p></li>
+<li><p>Using express’s middleware method invoke the following <code class="docutils literal notranslate"><span class="pre">express.json()</span></code>.</p></li>
+<li><p>Require the <code class="docutils literal notranslate"><span class="pre">cors</span></code> package and save it to the variable <code class="docutils literal notranslate"><span class="pre">cors</span></code>. Using <code class="docutils literal notranslate"><span class="pre">express</span></code>’s middleware method invoke <code class="docutils literal notranslate"><span class="pre">cors</span></code>.</p></li>
+<li><p>Use the <code class="docutils literal notranslate"><span class="pre">.listen</span></code> method to listen for requests.</p></li>
+<li><p>Start up your server to see if it is running with <code class="docutils literal notranslate"><span class="pre">nodemon</span></code>.</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">nodemon</p>
+<div class="admonition-body docutils container">
+<p>Remember that nodemon takes the place of node, and that the file path and your location are very important. Make sure you are in your <cite>server</cite> folder when you run <code class="docutils literal notranslate"><span class="pre">nodemon</span></code> using:</p>
+<p><code class="docutils literal notranslate"><span class="pre">npx</span> <span class="pre">nodemon</span> <span class="pre">index.js</span></code>
+OR
+<code class="docutils literal notranslate"><span class="pre">nodemon</span> <span class="pre">index.js</span></code></p>
+<p>Remember that you can create a script in your <code class="docutils literal notranslate"><span class="pre">package.json</span></code> to automate this script in some way if you would like to.</p>
+</div>
+</div>
+</section>
+<section class="section" id="part-5-controller">
+<h3>Part 5: Controller</h3>
+<p>Let’s set up our endpoints and their handler functions. Feel free to use a previous lab (such as <a class="reference external" href="https://ed.devmountain.com/materials/exercises/sql-in-practice/">SQL in Practice</a> as an example).</p>
+<ol class="arabic simple">
+<li><p>Create a file called <code class="docutils literal notranslate"><span class="pre">controller.js</span></code> in your <cite>server</cite> folder.</p></li>
+</ol>
+<p># Install <code class="docutils literal notranslate"><span class="pre">sequelize</span></code>, <code class="docutils literal notranslate"><span class="pre">pg</span></code>, and <code class="docutils literal notranslate"><span class="pre">pg-hstore</span></code> and set up the connection to your database in your controller file.</p>
+<ol class="arabic simple">
+<li><p>In <code class="docutils literal notranslate"><span class="pre">index.js</span></code>, write a get endpoint that will send the user information from the database. The endpoint should be <code class="docutils literal notranslate"><span class="pre">/api/info</span></code>.</p></li>
+<li><p>In your controller file, write the handler function that will run when that endpoint is hit.</p></li>
+<li><p>Back in <code class="docutils literal notranslate"><span class="pre">index.js</span></code>, write a post endpoint (also at <code class="docutils literal notranslate"><span class="pre">/api/info</span></code>) for the user to be able to save information to the database.</p></li>
+<li><p>Write the appropriate handler function in your controller file.</p></li>
+</ol>
+</section>
+<section class="section" id="part-6-postman-testing">
+<h3>Part 6: Postman Testing</h3>
+<p>Test your endpoints with postman to make sure that they work!</p>
+<ol class="arabic simple">
+<li><p>Make sure your server is running and open up Postman to test your 2 endpoints.</p></li>
+<li><p>When hitting your <code class="docutils literal notranslate"><span class="pre">GET</span></code> endpoint you should get back an array of objects.</p></li>
+<li><p>When hitting your <code class="docutils literal notranslate"><span class="pre">POST</span></code> endpoint you should get back an empty array. And the data should be visible in your database. (Don’t forget to send a body with an <code class="docutils literal notranslate"><span class="pre">info</span></code> property on it.)</p></li>
+</ol>
+</section>
+<section class="section" id="part-7-front-end-other-packages">
+<h3>Part 7: Front End &amp; Other Packages</h3>
+<ol class="arabic simple">
+<li><p>Keep the back end running and start the front end up as well. See if your fullstack app works!</p></li>
+<li><p>Take some time to implement <code class="docutils literal notranslate"><span class="pre">chalk</span></code>, <code class="docutils literal notranslate"><span class="pre">morgan</span></code>, and <code class="docutils literal notranslate"><span class="pre">debug</span></code> into your server.</p></li>
+<li><p>Take some time to use Node.js with Chrome DevTools</p></li>
+</ol>
+<p><strong>When you’re done, push your code to GitHub.</strong></p>
+</section>
+</section>
+</section>
+
+        </main>
+
+        <footer id="page-footer">
+            <p>&copy; 2022 Devmountain</p>
+        </footer>
+      </div>
+
+      <script src="_static/main.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+  </body>
+</html>
